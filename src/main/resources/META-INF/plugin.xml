@@ -3,6 +3,7 @@
     <id>com.github.raystatic.commitgenie</id>
     <name>commit-genie</name>
     <vendor>raystatic</vendor>
+    <description>AI-powered commit message generator for IntelliJ</description>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -12,4 +13,12 @@
         <toolWindow factoryClass="com.github.raystatic.commitgenie.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.raystatic.commitgenie.startup.MyProjectActivity" />
     </extensions>
+
+    <actions>
+        <action id="GenerateCommitMessage"
+                class="com.github.raystatic.commitgenie.CommitMessageAction"
+                text="Generate Commit Message"
+                description="Generate AI-based commit message for staged changes"/>
+    </actions>
+
 </idea-plugin>
