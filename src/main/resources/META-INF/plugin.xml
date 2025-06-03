@@ -5,7 +5,7 @@
     <vendor email="rahul9650ray@gmail.com" url="https://rahulray.dev">Rahul Ray</vendor>
     <version>1.0.0</version>
     <description>
-        Generate professional Git commit messages using AI.
+        Commit Genie is an AI-powered IntelliJ plugin designed to streamline your Git workflow by generating clear, concise commit messages based on your code changes. By analyzing staged modifications, it suggests commit messages that adhere to best practices, enhancing both productivity and consistency in your development process. .
     </description>
     <change-notes>
         Initial release of CommitGenie.
