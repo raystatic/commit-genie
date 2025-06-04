@@ -1,47 +1,55 @@
-# commit-genie
+# ✨ Commit Genie
 
 ![Build](https://github.com/raystatic/commit-genie/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/27496-commit-genie.svg)](https://plugins.jetbrains.com/plugin/27496-commit-genie)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/27496-commit-genie.svg)](https://plugins.jetbrains.com/plugin/27496-commit-genie)
 
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties) and [pluginName](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
-
-<!-- Plugin description -->
 Commit Genie is an AI-powered IntelliJ plugin designed to streamline your Git workflow by generating clear, concise commit messages based on your code changes. By analyzing staged modifications, it suggests commit messages that adhere to best practices, enhancing both productivity and consistency in your development process.
-<!-- Plugin description end -->
 
-## Installation
-
-- Using the IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "commit-genie"</kbd> >
-  <kbd>Install</kbd>
-  
-- Using JetBrains Marketplace:
-
-  Go to [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID) and install it by clicking the <kbd>Install to ...</kbd> button in case your IDE is running.
-
-  You can also download the [latest release](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID/versions) from JetBrains Marketplace and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
-- Manually:
-
-  Download the [latest release](https://github.com/raystatic/commit-genie/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+## 🧠 Features
+- 🔍 Analyzes staged changes to suggest commit messages.
+- 🧾 Generates commit messages adhering to conventional commit standards.
+- 🪄 Automatically saves your OpenAI API key securely for future use.
+- 📋 Easily copy to clipboard or apply suggested messages.
+- 💬 Supports fallback for API errors and invalid keys.
 
 
----
-Plugin based on the [IntelliJ Platform Plugin Template][template].
+## 🖼️ Screenshots
+🔍 1. Trigger the Action
+Search for Generate Commit Message via the IntelliJ action panel.
+<image src="https://github.com/user-attachments/assets/4a47ba4b-15b6-4ad5-8b19-0fc6ddb74be5" width=500px/>
 
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+🔐 2. Enter API Key
+Enter your OpenAI API key on first use. It will be securely stored for future prompts.
+<image src="https://github.com/user-attachments/assets/b286dedb-59ab-4ab2-8a4c-d3d052ec12f0" width=500px/>
+
+💬 3. Suggested Commit Message
+Generated commit messages are shown in a dialog with an option to copy.
+<image src="https://github.com/user-attachments/assets/dfd6fc91-5c15-4caa-9428-59a511f2828d" width=500px/>
+
+## 🚀 Getting Started
+✅ Prerequisites
+IntelliJ IDEA 2022.2+
+
+OpenAI API Key (get yours from platform.openai.com)
+
+## 🔧 Installation
+Go to Settings → Plugins → Search for Commit Genie.
+
+Click Install and restart your IDE.
+
+Trigger via ⇧ Shift twice → type Generate Commit Message.
+
+## 🔑 API Key Setup
+On first use, you’ll be prompted to enter your OpenAI API key. It will be encrypted and stored securely for reuse.
+
+If the key becomes invalid or returns an error, the plugin will prompt you to re-enter a new key.
+
+## 🛠️ Development
+Clone this repo and run the plugin using IntelliJ’s Plugin DevKit:
+`git clone https://github.com/raystatic/commit-genie.git`
+Use the `runIde` task to launch a sandbox IDE with the plugin.
+
+🤝 Contributing
+Feel free to open issues or submit pull requests to improve functionality, add features, or fix bugs.
+
