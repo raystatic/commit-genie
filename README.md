@@ -36,6 +36,8 @@ IntelliJ IDEA 2022.2+
 OpenAI API Key (get yours from platform.openai.com)
 
 ## 🔧 Installation
+<img width="700" alt="Screenshot 2025-06-04 at 8 05 51 PM" src="https://github.com/user-attachments/assets/b3b706fb-e138-4275-8b79-69506c186bca" />
+
 Go to Settings → Plugins → Search for Commit Genie.
 
 Click Install and restart your IDE.
