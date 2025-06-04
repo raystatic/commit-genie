@@ -4,7 +4,9 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/27496-commit-genie.svg)](https://plugins.jetbrains.com/plugin/27496-commit-genie)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/27496-commit-genie.svg)](https://plugins.jetbrains.com/plugin/27496-commit-genie)
 
+<!-- Plugin description -->
 Commit Genie is an AI-powered IntelliJ plugin designed to streamline your Git workflow by generating clear, concise commit messages based on your code changes. By analyzing staged modifications, it suggests commit messages that adhere to best practices, enhancing both productivity and consistency in your development process.
+<!-- Plugin description end -->
 
 ## 🧠 Features
 - 🔍 Analyzes staged changes to suggest commit messages.
