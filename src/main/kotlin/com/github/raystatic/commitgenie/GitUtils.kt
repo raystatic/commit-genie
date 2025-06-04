@@ -5,13 +5,24 @@ import java.io.File
 object GitUtils {
     fun getGitDiff(gitRoot: String): String {
         return try {
-            val process = ProcessBuilder("git", "diff")
+            val unstaged = ProcessBuilder("git", "diff")
                 .directory(File(gitRoot))
                 .redirectErrorStream(true)
                 .start()
-            process.inputStream.bufferedReader().readText()
+                .inputStream.bufferedReader().readText()
+
+            val staged = ProcessBuilder("git", "diff", "--cached")
+                .directory(File(gitRoot))
+                .redirectErrorStream(true)
+                .start()
+                .inputStream.bufferedReader().readText()
+
+            staged + "\n" + unstaged
         } catch (e: Exception) {
+            e.printStackTrace()
+            println("Exception while fetching git diff: ${e.message}")
             ""
         }
     }
 }
+

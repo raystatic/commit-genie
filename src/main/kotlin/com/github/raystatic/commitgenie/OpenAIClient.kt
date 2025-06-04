@@ -54,13 +54,13 @@ object OpenAIClient {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                callback(Result.Failure("Failed to fetch message: ${e.localizedMessage}"))
+                callback(Result.Failure("Failed to fetch message: ${e.localizedMessage}", ))
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string() ?: ""
                 if (!response.isSuccessful) {
-                    callback(Result.Failure("API Error ${response.code}: ${responseBody}"))
+                    callback(Result.Failure("API Error ${responseBody}", response.code))
                     return
                 }
 
@@ -68,13 +68,13 @@ object OpenAIClient {
                     val jsonObject = JSONObject(responseBody)
                     val choices = jsonObject.getJSONArray("choices")
                     if (choices.length() == 0) {
-                        callback(Result.Failure("No choices returned in response."))
+                        callback(Result.Failure("No choices returned in response.", response.code))
                         return
                     }
                     val message = choices.getJSONObject(0).getJSONObject("message").getString("content")
                     callback(Result.Success(message))
                 } catch (e: Exception) {
-                    callback(Result.Failure("Failed to parse response: ${e.localizedMessage}"))
+                    callback(Result.Failure("Failed to parse response: ${e.localizedMessage}", response.code))
                 }
             }
         })

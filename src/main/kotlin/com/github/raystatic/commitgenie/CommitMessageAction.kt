@@ -9,6 +9,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vcs.ProjectLevelVcsManager
 import com.intellij.openapi.vcs.changes.ChangeListManager
+import java.awt.Toolkit
+import java.awt.datatransfer.StringSelection
 
 class CommitMessageAction : AnAction() {
 
@@ -16,18 +18,21 @@ class CommitMessageAction : AnAction() {
         val project = event.project ?: return
 
         val gitRoot = ProjectLevelVcsManager.getInstance(project).allVcsRoots.firstOrNull()?.path?.path
+        println("gitroot: $gitRoot")
         if (gitRoot == null) {
             Messages.showErrorDialog(project, "Could not determine Git root.", "CommitGenius")
             return
         }
 
         val changes = ChangeListManager.getInstance(project).allChanges
+        println("changes: $changes")
         if (changes.isEmpty()) {
             Messages.showInfoMessage(project, "No staged changes found.", "CommitGenius")
             return
         }
 
         val diffSummary = GitUtils.getGitDiff(gitRoot)
+        println("diffSummary: $diffSummary")
         if (diffSummary.isEmpty()) {
             Messages.showInfoMessage(project, "No staged changes found.", "CommitGenius")
             return
@@ -46,11 +51,54 @@ class CommitMessageAction : AnAction() {
         OpenAIClient.generateCommitMessage(apiKey, diffSummary) { result ->
             ApplicationManager.getApplication().invokeLater {
                 when (result) {
-                    is Result.Success -> Messages.showInfoMessage(result.message, "Generated Commit Message")
-                    is Result.Failure -> Messages.showErrorDialog(result.error, "CommitGenius")
+                    is Result.Success -> {
+                        val choice = Messages.showYesNoCancelDialog(
+                            project,
+                            result.message,
+                            "Generated Commit Message",
+                            "Copy to Clipboard",
+                            "Close",
+                            "Cancel", // No third button (Cancel)
+                            Messages.getInformationIcon()
+                        )
+
+                        if (choice == Messages.YES) {
+                            val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+                            val selection = StringSelection(result.message)
+                            clipboard.setContents(selection, selection)
+//                            Messages.showInfoMessage("Commit message copied to clipboard.", "CommitGenius")
+                        }
+                    }
+                    is Result.Failure -> {
+                        if (result.code == 401) {
+                            invalidateApiKey()
+                            val newApiKey = promptForApiKey(project)
+                            if (!newApiKey.isNullOrBlank()) {
+                                saveApiKey(newApiKey)
+                                // Retry once with new key
+                                OpenAIClient.generateCommitMessage(newApiKey, diffSummary) { retryResult ->
+                                    ApplicationManager.getApplication().invokeLater {
+                                        when (retryResult) {
+                                            is Result.Success -> Messages.showInfoMessage(retryResult.message, "Generated Commit Message")
+                                            is Result.Failure -> Messages.showErrorDialog(retryResult.error, "CommitGenius")
+                                        }
+                                    }
+                                }
+                            } else {
+                                Messages.showErrorDialog(project, "No valid API key entered.", "CommitGenius")
+                            }
+                        } else {
+                            Messages.showErrorDialog(result.error, "CommitGenius")
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private fun invalidateApiKey() {
+        val attributes = CredentialAttributes("com.commitgenie.openai.apikey")
+        PasswordSafe.instance.setPassword(attributes, null)
     }
 
     private fun promptForApiKey(project: Project): String? {
